@@ -1,0 +1,11 @@
+| Role                 | Barva           | HEX       | Popis                           |
+| -------------------- | --------------- | --------- | ------------------------------- |
+| **Background**       | Tmavě šedá      | `#121212` | Hlavní pozadí                   |
+| **Card background**  | Šedá            | `#1E1E1E` | Panely, karty                   |
+| **Primary text**     | Světle šedá     | `#E0E0E0` | Hlavní text                     |
+| **Secondary text**   | Šedá            | `#A0A0A0` | Popisky, vedlejší info          |
+| **Accent (primary)** | Oranžová FACEIT | `#FF5500` | CTA tlačítka, ikony, zvýraznění |
+| **Hover / Border**   | Tmavá oranžová  | `#CC4400` | Hover efekty                    |
+| **Success**          | Zelená          | `#4CAF50` | Výhry                           |
+| **Error**            | Červená         | `#F44336` | Prohry                          |
+| **Neutral border**   | Tmavě šedá      | `#2C2C2C` | Okraje, oddělovače              |
