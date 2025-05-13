@@ -16,9 +16,8 @@ export default function SearcPlayer() {
   };
 
   return (
-    <div className="min-h-screen flex items-center justify-center px-4 bg-[#121212]">
       <div className="p-6 rounded-2xl shadow-xl w-full max-w-xl bg-[#1E1E1E]">
-        <h1 className="text-2xl font-bold mb-4" style={{ color: "#FF5500" }}> Vyhledat hráče</h1>
+        <h1 className="text-2xl font-bold mb-4 text-[#FF5500]"> Vyhledat hráče</h1>
         <div className="flex gap-2 mb-4">
           <input
             type="text"
@@ -44,20 +43,8 @@ export default function SearcPlayer() {
             onMouseOut={(e) => (e.currentTarget.style.backgroundColor = "#FF5500")}
           >
             <Search size={18} />
-            Vyhledat
           </button>
         </div>
-
-        {loading && <p style={{ color: "#A0A0A0" }}>Načítání...</p>}
-
-        {playerData && (
-          <div className="mt-4 pt-4" style={{ borderTop: "1px solid #2C2C2C" }}>
-            <p className="text-lg font-semibold">Nick: {playerData.nickname}</p>
-            <p>Level: {playerData.level}</p>
-            <p>Elo: {playerData.elo}</p>
-          </div>
-        )}
       </div>
-    </div>
   );
 }
