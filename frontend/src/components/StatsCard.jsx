@@ -7,10 +7,20 @@ import {
   LinearScale
 } from "chart.js";
 
-import {Bookmark, Plus} from "lucide-react";
+import { Bookmark, Plus } from "lucide-react";
 
 ChartJS.register(LineElement, PointElement, CategoryScale, LinearScale);
 
+// Data o zápasech (simulovaný JSON)
+const matchesData = [
+  { date: "12. maj", map: "Mirage", result: "Win", kd: "18/12", elo: "+24" },
+  { date: "11. maj", map: "Mirage", result: "Win", kd: "15/13", elo: "+24" },
+  { date: "10. maj", map: "Mirage", result: "Loss", kd: "18/18", elo: "+14" },
+  { date: "9. maj", map: "Mirage", result: "Win", kd: "15/15", elo: "+22" },
+  { date: "4. maj", map: "Mirage", result: "Loss", kd: "13/15", elo: "–24" }
+];
+
+// Data pro graf ELO
 const eloData = {
   labels: ["1", "2", "3", "4", "5", "6", "7", "8", "9"],
   datasets: [
@@ -25,6 +35,7 @@ const eloData = {
   ]
 };
 
+// Možnosti pro graf ELO
 const eloOptions = {
   plugins: { legend: { display: false } },
   scales: {
@@ -37,7 +48,13 @@ const eloOptions = {
   }
 };
 
-export default function PlayerProfile() {
+export default function PlayerProfile({ onSearchAgain }) {
+  const stats = [
+    { label: "ELO", value: "1.275" },
+    { label: "Win Rate", value: "52,5 %" },
+    { label: "K/D Ratio", value: "1,21" },
+  ];
+
   return (
     <div className="p-8 text-white bg-[#181818] rounded-xl">
       {/* Profilní karta */}
@@ -52,16 +69,18 @@ export default function PlayerProfile() {
             <h2 className="text-2xl font-bold">Skylr</h2>
             <img src="https://flagcdn.com/w40/cz.png" alt="CZ" className="w-6" />
           </div>
-          <p className="text-gray-400">ELL10</p>
         </div>
-        <span className="ml-auto text-orange-500 font-bold text-lg">10</span>
+        <span className="ml-auto text-orange-500 font-bold text-xl">10</span>
       </div>
 
       {/* Statistiky */}
       <div className="grid grid-cols-4 gap-6 mb-8">
-        <StatCard label="ELO" value="1.275" />
-        <StatCard label="Win Rate" value="52,5 %" />
-        <StatCard label="K/D Ratio" value="1,21" />
+        {stats.map((stat, index) => (
+          <div key={index} className="bg-[#1E1E1E] p-4 rounded-xl text-center">
+            <h4 className="text-gray-400">{stat.label}</h4>
+            <p className="text-2xl font-bold mt-2">{stat.value}</p>
+          </div>
+        ))}
         <div className="bg-[#1E1E1E] p-4 rounded-xl">
           <h3 className="text-orange-500 font-semibold mb-2">ELO History</h3>
           <Line data={eloData} options={eloOptions} />
@@ -82,13 +101,7 @@ export default function PlayerProfile() {
             </tr>
           </thead>
           <tbody className="text-white">
-            {[
-              { date: "12. maj", map: "Mirage", result: "Win", kd: "18/12", elo: "+24" },
-              { date: "11. maj", map: "Mirage", result: "Win", kd: "15/13", elo: "+24" },
-              { date: "10. maj", map: "Mirage", result: "Loss", kd: "18/18", elo: "+14" },
-              { date: "9. maj", map: "Mirage", result: "Win", kd: "15/15", elo: "+22" },
-              { date: "4. maj", map: "Mirage", result: "Loss", kd: "13/15", elo: "–24" }
-            ].map((match, i) => (
+            {matchesData.map((match, i) => (
               <tr key={i} className="border-b border-[#2C2C2C]">
                 <td className="py-2">{match.date}</td>
                 <td>{match.map}</td>
@@ -104,30 +117,24 @@ export default function PlayerProfile() {
           </tbody>
         </table>
       </div>
+
       {/* Buttons */}
-        <div className="flex justify-between items-center mt-8 px-4">
-      {/* Levé tlačítko */}
+      <div className="flex justify-between items-center mt-8 px-4">
+      {/*PLUS*/}
         <button className="group bg-[#2C2C2C] hover:bg-[#3a3a3a] text-white py-2 px-4 rounded flex items-center transition">
-            <Plus className="h-5 w-5 group-hover:scale-110 transform transition duration-200" />
+          <Plus className="h-5 w-5 group-hover:scale-110 transform transition duration-200" />
         </button>
-      {/* Prostřední tlačítko */}
-        <button className="bg-orange-500 hover:bg-orange-600 text-white font-semibold py-2 px-6 rounded transition">Hledat znovu</button>
-
-      {/* Pravé tlačítko s Lucide Bookmark ikonou */}
+      {/*ZNOVU*/}
+        <button
+          className="bg-orange-500 hover:bg-orange-600 text-white font-semibold py-2 px-6 rounded transition"
+          onClick={onSearchAgain}
+        > Hledat znovu
+        </button>
+      {/*BOOKMARK*/}
         <button className="group bg-[#2C2C2C] hover:bg-[#3a3a3a] text-white py-2 px-4 rounded flex items-center transition">
-            <Bookmark className="h-5 w-5 group-hover:scale-110 transform transition duration-200" />
+          <Bookmark className="h-5 w-5 group-hover:scale-110 transform transition duration-200" />
         </button>
-</div>
-
-    </div>
-  );
-}
-
-function StatCard({ label, value }) {
-  return (
-    <div className="bg-[#1E1E1E] p-4 rounded-xl text-center">
-      <h4 className="text-gray-400">{label}</h4>
-      <p className="text-2xl font-bold mt-2">{value}</p>
+      </div>
     </div>
   );
 }
