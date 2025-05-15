@@ -3,14 +3,22 @@ import SearchPlayer from "../components/SearchPlayer";
 import PlayerProfile from "../components/StatsCard";
 
 export default function Vyhledat() {
-  const [showProfile, setShowProfile] = useState(false);
+  const [playerData, setPlayerData] = useState(null);
+  const [loading, setLoading] = useState(false);
 
   return (
-    <div className="min-h-screen flex items-center justify-center pt-18 bg-[#121212] max-w-2xl mx-auto">
-      {showProfile ? (
-        <PlayerProfile onSearchAgain={() => setShowProfile(false)} />
+    <div className="min-h-screen flex items-center justify-center bg-[#121212] mx-auto">
+      {playerData ? (
+        <PlayerProfile
+          playerData={playerData}
+          onSearchAgain={() => setPlayerData(null)}
+        />
       ) : (
-        <SearchPlayer onFoundPlayer={() => setShowProfile(true)} />
+        <SearchPlayer
+          onFoundPlayer={setPlayerData}
+          loading={loading}
+          setLoading={setLoading}
+        />
       )}
     </div>
   );
