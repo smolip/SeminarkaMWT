@@ -54,6 +54,7 @@ app.get('/api/faceit/highlights/:player_id', async (req, res) => {
   }
 });
 
+// Získání dat pro graf ela
 app.get('/api/faceit/playerGraphs/:playerid', async (req, res) => {
   const { playerid } = req.params; // správný název podle URL parametru
   try {
@@ -65,7 +66,6 @@ app.get('/api/faceit/playerGraphs/:playerid', async (req, res) => {
       .json(error.response?.data || { error: error.message });
   }
 });
-
 
 
 
