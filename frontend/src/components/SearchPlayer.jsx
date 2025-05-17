@@ -21,8 +21,6 @@ export default function SearchPlayer({ onFoundPlayer, loading, setLoading }) {
       const graphRes =  await fetch (`http://localhost:3001/api/faceit/playerGraphs/${nickname}`);
       const graph = await graphRes.json();
 
-      localStorage.setItem("playerName", nickname);
-
       onFoundPlayer({ stats, matches, overview, graph });
     } catch (err) {
       onFoundPlayer(null);

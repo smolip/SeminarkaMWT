@@ -1,28 +1,63 @@
 import { Bookmark, BookmarkCheck, Plus } from "lucide-react";
-import { useState } from "react"
+import { useState, useEffect } from "react"
 
-export default function PlayerProfile({ playerData, onSearchAgain }) {
+export default function PlayerProfile({ playerData, onSearchAgain, onShowMoreStats }) {
 
   const [bookmarked, setBookmarked] = useState(false);
 
+  // Get player details
+  const overview = playerData.overview || {};
+  const nickname = overview.name ?? "?";
+  const avatar = overview.avatar || "https://i.imgur.com/2Fx1bsv.png";
+  const level = overview.lvl ?? "?";
+  const faceitUrl = overview.f_url;
+
+
+  useEffect(() => {
+    const bookmarkedPlayers = JSON.parse(localStorage.getItem('bookmarkedPlayers')) || [];
+    setBookmarked(bookmarkedPlayers.some(player => player.nickname === nickname));
+  }, [nickname]);
+
+  
   const handleClick = () => {
-    setBookmarked(prev => !prev);
+    const bookmarkedPlayers = JSON.parse(localStorage.getItem('bookmarkedPlayers')) || [];
+    let updatedBookmarks;
+
+    const currentPlayer = {
+      nickname: nickname,
+      avatar: avatar,
+      level: level,
+      faceitUrl: faceitUrl,
+    };
+
+    if (bookmarked) {
+      // Remove player
+      updatedBookmarks = bookmarkedPlayers.filter(player => player.nickname !== nickname);
+    } else {
+      // Add player if not bookmarked
+      // Avoid adding duplicate nicknames
+      if (!bookmarkedPlayers.some(player => player.nickname === nickname)) {
+         updatedBookmarks = [...bookmarkedPlayers, currentPlayer];
+      } else {
+         updatedBookmarks = bookmarkedPlayers; // No change if already exists
+      }
+    }
+    localStorage.setItem('bookmarkedPlayers', JSON.stringify(updatedBookmarks));
+    setBookmarked(prev => !prev); // Toggle
   }
 
-  // Základní info z overview
-  const overview = playerData.overview || {};
+
+  
   const statsObj = playerData.stats || {};
-  // Statistiky z overview nebo stats
   const stats = [
     { label: "ELO", value: overview.elo ?? "?" },
     { label: "Win Rate", value: statsObj.wr ?? "?" },
     { label: "K/D Ratio", value: statsObj.avg_kdr ?? "?" },
     { label: "Matches", value: statsObj.m ?? "?" },
   ];
-
-  
-
   const matches = (playerData.matches?.segments || []).slice(0, 10);
+
+
 
   return (
       <div className="p-8 text-white bg-[#181818] rounded-xl mt-18">
@@ -106,8 +141,10 @@ export default function PlayerProfile({ playerData, onSearchAgain }) {
                   <td>{`${match.k}/${match.d}`}</td>
                   <td>{`${match.elod} ${match.elo}`}</td>
                   <td>
-                    <button className="group bg-[#2C2C2C] hover:bg-[#3a3a3a] text-white rounded flex items-center transition">
-                      <Plus className="h-5 w-5 group-hover:scale-105 transform transition duration-200" />
+                  <button className="group bg-[#2C2C2C] hover:bg-[#3a3a3a] text-white rounded flex items-center transition">
+                        <a href={match.url} target="_blank" rel="noopener noreferrer">
+                        <Plus className="h-5 w-5 group-hover:scale-105 transform transition duration-200" />
+                        </a>
                     </button>
                   </td>
                 </tr>
@@ -118,7 +155,7 @@ export default function PlayerProfile({ playerData, onSearchAgain }) {
     
         {/* Buttons */}
         <div className="flex justify-between items-center mt-6 px-4">
-          <button className="group bg-[#2C2C2C] hover:bg-[#3a3a3a] text-white py-2 px-4 rounded flex items-center transition">
+          <button className="group bg-[#2C2C2C] hover:bg-[#3a3a3a] text-white py-2 px-4 rounded flex items-center transition" onClick={onShowMoreStats}>
             <Plus className="h-5 w-5 group-hover:scale-110 transform transition duration-200" />
           </button>
           <button

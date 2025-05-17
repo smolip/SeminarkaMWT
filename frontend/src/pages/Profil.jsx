@@ -1,13 +1,13 @@
 import { useEffect, useState } from "react";
 import SetProfile from "../components/SetProfile";
-import StatsCardPlus from "../components/StatsCardPlus";
+import PlayerProfilePlus from "../components/StatsCardPlus";
 
 export default function Profil() {
   const [playerData, setPlayerData] = useState(null);
   const [loading, setLoading] = useState(false);
   const [nickname, setNickname] = useState(null);
 
-  // 1️⃣ Načti přezdívku z localStorage při načtení stránky
+  // Load nickname
   useEffect(() => {
     const saved = localStorage.getItem("playerName");
     if (saved) {
@@ -18,7 +18,6 @@ export default function Profil() {
 
   const CACHE_DURATION = 5 * 60 * 1000; // 5 minut
 
-  // 2️⃣ Funkce pro načtení dat hráče z API
   const fetchPlayerData = async (name) => {
     setLoading(true);
     
@@ -63,14 +62,12 @@ export default function Profil() {
     }
   };
 
-  // 3️⃣ Funkce, když SetProfile uloží jméno
   const handleSetProfile = (newName) => {
     localStorage.setItem("playerName", newName);
     setNickname(newName);
     fetchPlayerData(newName);
   };
-
-  // 4️⃣ Funkce pro nové hledání
+  
   const resetSearch = () => {
     setPlayerData(null);
     setNickname(null);
@@ -81,7 +78,7 @@ export default function Profil() {
   };
 
   return (
-    <div className="min-h-screen flex flex-col items-center justify-center bg-[#121212] px-4">
+    <div className="min-h-screen flex items-center justify-center bg-[#121212] mx-auto">
       {!nickname && (
         <SetProfile onSetProfile={handleSetProfile} />
       )}
@@ -90,7 +87,7 @@ export default function Profil() {
       )}
       {playerData && (
           <div className="">
-            <StatsCardPlus playerData={playerData} onSearchAgain={resetSearch} />
+            <PlayerProfilePlus playerData={playerData} onSearchAgain={resetSearch} buttonText="Změnit jméno" />
           </div>
       )}
     </div>

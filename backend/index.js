@@ -56,7 +56,7 @@ app.get('/api/faceit/highlights/:player_id', async (req, res) => {
 
 // Získání dat pro graf ela
 app.get('/api/faceit/playerGraphs/:playerid', async (req, res) => {
-  const { playerid } = req.params; // správný název podle URL parametru
+  const { playerid } = req.params;
   try {
     const response = await axios.get(`${BASE_URL}playerGraphs/${playerid}?key=${API_KEY}`);
     res.json(response.data);

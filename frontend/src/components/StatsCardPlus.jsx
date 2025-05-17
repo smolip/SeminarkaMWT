@@ -1,10 +1,9 @@
 import { Plus } from "lucide-react";
-import { useState } from "react"; 
 import CIcon from '@coreui/icons-react'
 import { cibSteam, cibFaceit } from '@coreui/icons'
 import EloChart from "../components/EloChart"
 
-export default function PlayerProfilePlus({ playerData, onSearchAgain }) {
+export default function PlayerProfilePlus({ playerData, onSearchAgain, buttonText }) {
 
   // Základní info z overview
   const overview = playerData.overview || {};
@@ -24,7 +23,9 @@ export default function PlayerProfilePlus({ playerData, onSearchAgain }) {
     { label: "Avg Deaths", value: statsObj.avg_d ?? "?" },
 
   ];
+  const eloData = playerData.graph || {};
   
+
   const matches = playerData.matches?.segments || {};
 
   return (
@@ -132,7 +133,9 @@ export default function PlayerProfilePlus({ playerData, onSearchAgain }) {
                     <td>{`${match.elod} ${match.elo}`}</td>
                     <td>
                     <button className="group bg-[#2C2C2C] hover:bg-[#3a3a3a] text-white rounded flex items-center transition">
+                        <a href={match.url} target="_blank" rel="noopener noreferrer">
                         <Plus className="h-5 w-5 group-hover:scale-105 transform transition duration-200" />
+                        </a>
                     </button>
                     </td>
                 </tr>
@@ -144,8 +147,7 @@ export default function PlayerProfilePlus({ playerData, onSearchAgain }) {
 
         {/* Graf */}
         <div className="bg-[#1E1E1E] p-6 rounded-xl mb-6">
-            <EloChart/>
-
+            <EloChart eloData={eloData}/>
         </div>
 
         </div>
@@ -156,7 +158,7 @@ export default function PlayerProfilePlus({ playerData, onSearchAgain }) {
             className="bg-orange-500 hover:bg-orange-600 text-white font-semibold py-2 px-6 rounded transition"
             onClick={onSearchAgain}
           >
-            Změnit jméno
+            {buttonText}
           </button>
         </div>
       </div>

@@ -1,22 +1,21 @@
 import React from 'react';
 import { Line } from 'react-chartjs-2';
 import { Chart as ChartJS, CategoryScale, LinearScale, PointElement, LineElement, Title, Tooltip, Legend } from 'chart.js';
-import jsonData from './data.json'; // Předpokládá, že data.json je ve stejné složce
 
 ChartJS.register(CategoryScale, LinearScale, PointElement, LineElement, Title, Tooltip, Legend);
 
-export default function EloGraph() {
-  const eloData = jsonData.graph_data.elo;
+export default function EloGraph({eloData}) {
 
+  console.log(eloData);
   const chartData = {
-    labels: eloData.dates, // Datumy jako popisky na ose X
+    labels: eloData.graph_data.elo.dates,
     datasets: [
       {
-        label: 'ELO', // Popisek pro ELO data
-        data: eloData.values, // Hodnoty ELO
-        borderColor: 'rgb(249, 115, 22)', // Barva linie
-        backgroundColor: 'rgba(249, 115, 22, 0.5)', // Barva pozadí (např. pro vyplněnou oblast pod linií)
-        tension: 1, // Zakřivení linie
+        label: 'ELO',
+        data: eloData.graph_data.elo.values, 
+        borderColor: 'rgb(249, 115, 22)', 
+        backgroundColor: 'rgba(249, 115, 22, 0.5)', 
+        tension: 0.1, 
       },
     ],
   };

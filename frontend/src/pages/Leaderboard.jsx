@@ -1,3 +1,7 @@
 export default function Leaderboard() {
-    return <h2 className="text-xl font-semibold">Tvoje úasasasakoly</h2>;
+    return (
+      <div className="min-h-screen flex flex-col items-center bg-[#121212] mx-auto py-8 px-4">
+
+      </div>
+    )
   }
