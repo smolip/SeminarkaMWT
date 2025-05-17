@@ -14,9 +14,9 @@ export default function EloGraph() {
       {
         label: 'ELO', // Popisek pro ELO data
         data: eloData.values, // Hodnoty ELO
-        borderColor: 'rgb(75, 192, 192)', // Barva linie
-        backgroundColor: 'rgba(75, 192, 192, 0.5)', // Barva pozadí (např. pro vyplněnou oblast pod linií)
-        tension: 0.1, // Zakřivení linie
+        borderColor: 'rgb(249, 115, 22)', // Barva linie
+        backgroundColor: 'rgba(249, 115, 22, 0.5)', // Barva pozadí (např. pro vyplněnou oblast pod linií)
+        tension: 1, // Zakřivení linie
       },
     ],
   };
@@ -50,7 +50,7 @@ export default function EloGraph() {
 
   return (
     <div>
-      <h2>Graf vývoje ELO</h2>
+      <h2 className="text-orange-500 font-semibold mb-4">Graf vývoje ELA</h2>
       <Line data={chartData} options={options} />
     </div>
   );

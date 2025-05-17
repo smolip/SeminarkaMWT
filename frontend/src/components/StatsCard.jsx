@@ -1,6 +1,5 @@
 import { Bookmark, BookmarkCheck, Plus } from "lucide-react";
 import { useState } from "react"
-import EloChart from '../components/EloChart';
 
 export default function PlayerProfile({ playerData, onSearchAgain }) {
 
@@ -68,7 +67,7 @@ export default function PlayerProfile({ playerData, onSearchAgain }) {
     
         {/* Tabulka zápasů */}
         <div className="bg-[#1E1E1E] p-6 rounded-xl mb-6">
-          <h3 className="text-orange-500 font-semibold mb-4">Poslední zápasy</h3>
+          <h3 className="text-orange-500 font-semibold mb-4">Poslední 10 zápasů</h3>
           <table className="w-full text-sm text-left">
             <thead className="text-gray-400 border-b border-[#2C2C2C]">
               <tr>

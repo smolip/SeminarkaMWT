@@ -11,6 +11,8 @@
     "server": "node index.js"
   },
   "dependencies": {
+    "@coreui/icons": "^3.0.1",
+    "@coreui/icons-react": "^2.3.0",
     "@tailwindcss/vite": "^4.1.5",
     "chart.js": "^4.4.9",
     "lucide-react": "^0.508.0",
